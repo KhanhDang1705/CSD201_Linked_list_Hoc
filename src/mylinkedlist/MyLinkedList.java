@@ -22,6 +22,21 @@ public class MyLinkedList {
         temp.setNext(newNode);
     }
 
+    public void add(int data, int index){
+        Node newNode = new Node(data);
+        if (index == 0){
+            addFirst(data);
+            return;
+        } else {
+            Node temp = head;
+            for (int i = 0; i < index - 1; i++){
+                temp = temp.getNext();
+            }
+            Node nextNode = temp.getNext();
+            temp.setNext(newNode);
+            newNode.setNext(nextNode);
+        }
+    }
 
     public static void main(String[] args) {
         MyLinkedList linkedList = new MyLinkedList();
@@ -32,5 +47,6 @@ public class MyLinkedList {
         linkedList.addLast(1);
         linkedList.addLast(2);
         linkedList.addLast(3);
+        linkedList.add(6,1);
     }
 }
