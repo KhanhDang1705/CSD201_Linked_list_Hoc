@@ -89,10 +89,27 @@ public class MyLinkedList {
             deleteLast();
         } else {
             Node preNode = head;
-            for (int i = 1; i < index; i++){
+            for (int i = 1; i <= index; i++){
                 preNode = preNode.getNext();
             }
             preNode.setNext(preNode.getNext().getNext());
+        }
+    }
+
+    public void deleteWhile(int index){
+        if (index == 0) {
+            deleteFirst();
+        } else if (index == length() - 1){
+            deleteLast();
+        } else {
+            Node temp = head;
+            int count = 0;
+            while (count < index - 1){
+                temp = temp.getNext();
+                count++;
+            }
+            Node nodeToDelete = temp.getNext();
+            temp.setNext(nodeToDelete.getNext());
         }
     }
 
@@ -119,6 +136,26 @@ public class MyLinkedList {
             temp = temp.getNext();
         }
         return temp;
+    }
+
+    public void sort(){
+        if (head == null || head.getNext() == null) {
+            return;
+        }
+        boolean swapped;
+        do {
+            swapped = false;
+            Node temp = head;
+            while (temp != null && temp.getNext() != null) {
+                if (temp.getData() > temp.getNext().getData()) {
+                    int tempData = temp.getData();
+                    temp.setData(temp.getNext().getData());
+                    temp.getNext().setData(tempData);
+                    swapped = true;
+                }
+                temp = temp.getNext();
+            }
+        } while (swapped);
     }
 
     public static void main(String[] args) {
@@ -151,6 +188,14 @@ public class MyLinkedList {
         } else {
             System.out.println("Khong tim thay phan tu tai vi tri do.");
         }
+
+        linkedList.sort();
+        System.out.print("Danh sach da duoc sort: ");
+        linkedList.display();
+
+        linkedList.deleteWhile(2);
+        System.out.print("Danh sach da xoa: ");
+        linkedList.display();
 
         linkedList.delete(2);
         System.out.print("Danh sach da xoa: ");
