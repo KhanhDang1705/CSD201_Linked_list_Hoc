@@ -71,14 +71,54 @@ public class MyLinkedList {
             return;
         }
         if(head.getNext() == null){
-            head = null;
-            return;
+            deleteFirst();
         }
         Node temp = head;
-        while (temp.getNext().getNext() != null){
+        Node previous = null;
+        while(temp.getNext() != null){
+            previous = temp;
             temp = temp.getNext();
         }
-        temp.setNext(null);
+        previous.setNext(null);
+    }
+
+    public void delete(int index){
+        if (index == 0) {
+            deleteFirst();
+        } else if (index == length() - 1){
+            deleteLast();
+        } else {
+            Node preNode = head;
+            for (int i = 1; i < index; i++){
+                preNode = preNode.getNext();
+            }
+            preNode.setNext(preNode.getNext().getNext());
+        }
+    }
+
+    public boolean search(int data){
+        if (head == null){
+            return false;
+        }
+        Node temp = head;
+        while (temp != null){
+            if (temp.getData() == data){
+                return true;
+            }
+            temp = temp.getNext();
+        }
+        return false;
+    }
+
+    public Node searchAtPosition(int index){
+        if (index < 0 || index >= length()){
+            return null;
+        }
+        Node temp = head;
+        for (int i = 0; i < index; i++){
+            temp = temp.getNext();
+        }
+        return temp;
     }
 
     public static void main(String[] args) {
@@ -90,11 +130,30 @@ public class MyLinkedList {
         linkedList.addLast(1);
         linkedList.addLast(2);
         linkedList.addLast(3);
+        linkedList.addLast(4);
         linkedList.add(6,1);
 
         System.out.println("Do dai cua danh sach: "+ linkedList.length());
 
         System.out.print("Danh sach duoc hien thi: ");
+        linkedList.display();
+
+        boolean found = linkedList.search(4);
+        if (found) {
+            System.out.println("Dữ liệu tìm thấy.");
+        } else {
+            System.out.println("Không tìm thấy dữ liệu.");
+        }
+
+        Node nodeAtPosition = linkedList.searchAtPosition(1);
+        if (nodeAtPosition != null) {
+            System.out.println("Phan tu tai vi tri can tim la: " + nodeAtPosition.getData());
+        } else {
+            System.out.println("Khong tim thay phan tu tai vi tri do.");
+        }
+
+        linkedList.delete(2);
+        System.out.print("Danh sach da xoa: ");
         linkedList.display();
 
         linkedList.deleteFirst();
