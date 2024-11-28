@@ -158,6 +158,31 @@ public class MyLinkedList {
         } while (swapped);
     }
 
+    public void sortAtPosition(int start, int end){
+        if (start > end || end < 0 || start < 0){
+            return;
+        }
+        Node temp = head;
+        int i = 0;
+        while (i < start){
+            temp = temp.getNext();
+            i++;
+        }
+        while (i < end){
+            Node temp2 = temp.getNext();
+            while (temp2 != null){
+                if (temp.getData() > temp2.getData()){
+                    int tempData = temp.getData();
+                    temp.setData(temp2.getData());
+                    temp2.setData(tempData);
+                }
+                temp2 = temp2.getNext();
+            }
+            temp = temp.getNext();
+            i++;
+        }
+    }
+
     public static void main(String[] args) {
         MyLinkedList linkedList = new MyLinkedList();
 //        linkedList.addFirst(1);
@@ -168,7 +193,7 @@ public class MyLinkedList {
         linkedList.addLast(2);
         linkedList.addLast(3);
         linkedList.addLast(4);
-        linkedList.add(6,1);
+        linkedList.add(6,2);
 
         System.out.println("Do dai cua danh sach: "+ linkedList.length());
 
@@ -189,8 +214,12 @@ public class MyLinkedList {
             System.out.println("Khong tim thay phan tu tai vi tri do.");
         }
 
-        linkedList.sort();
-        System.out.print("Danh sach da duoc sort: ");
+//        linkedList.sort();
+//        System.out.print("Danh sach da duoc sort: ");
+//        linkedList.display();
+
+        linkedList.sortAtPosition(1,3);
+        System.out.print("da sort: ");
         linkedList.display();
 
         linkedList.deleteWhile(2);
